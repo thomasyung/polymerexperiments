@@ -1,0 +1,41 @@
+<link rel="import" href="https://polygit.org/components/polymer/polymer.html">
+<link rel="import" href="https://polygit.org/components/iron-ajax/iron-ajax.html">
+<link rel="import" href="meetup-event.html">
+
+<dom-module id="upcoming-meetups">
+  
+  <template>
+    <style>
+      :host {
+        display: flex;
+        box-sizing: border-box;
+      }
+    </style>
+    <iron-ajax
+      auto
+      url="/meetupupcomingevents?group={{group}}"
+      handle-as="json"
+      last-response="{{response}}"></iron-ajax>
+      
+    <template is="dom-repeat" items="{{response}}">
+      <meetup-event 
+        link="{{item.link}}" 
+        name="{{item.name}}"
+        time="{{item.time}}"
+        venue="{{item.venue.name}}"></meetup-event>
+    </template>
+  </template>
+  
+</dom-module>
+
+<script>
+  Polymer ({
+    is: 'upcoming-meetups',
+    properties: {
+      group: {
+        value:'ux-design-matters-mn',
+        notify: true
+      }
+    }
+  })
+</script>

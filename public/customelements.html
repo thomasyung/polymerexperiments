@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Custom Elements Demo</title>
+  <script src="custom-elements.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="centervh">
+  
+  <h1>Custom Elements Demo</h1>
+  
+  <p>This custom element code...</p>
+  
+  <code>
+    &lt;my-custom-template&gt;&lt;/my-custom-template&gt;
+  </code>
+  
+  <p>Generates this...</p>
+  
+  <my-custom-template></my-custom-template>
+  
+  <template id="my-custom-template">
+    <style>
+      p { color: blue; }
+    </style>
+    <p>I'm in Shadow DOM.</p>
+  </template>
+  
+  <script src="my-custom-template.js"></script>
+  
+</body>
+</html>

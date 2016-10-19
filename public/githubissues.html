@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Polymer iron-ajax demo</title>
+  <script src="https://polygit.org/components/webcomponentsjs/webcomponents-lite.min.js"></script>
+  <link rel="import" href="gh-issues.html">
+  <style>
+    body {
+      margin: 1em auto;
+      max-width: 50em;
+    }
+    label { 
+      float: left; 
+      margin-right: 5px;
+    }
+    input { 
+      display: block; 
+    }
+    gh-issues { 
+      clear: both; 
+      display: inline-block;
+      margin-top: 1em;
+    }
+  </style>
+</head>
+<body unresolved>
+  <template is="dom-bind">
+    <label>
+      Owner
+      <input type="text" value="{{owner::change}}" placeholder="Owner">
+    </label>
+    <label>
+      Repo
+      <input type="text" value="{{repo::change}}" placeholder="Repo">
+    </label>
+    <label>
+      State
+      <input type="text" value="{{state::change}}" placeholder="State">
+    </label>
+    <label>
+      Page
+      <input type="text" value="{{page::change}}" placeholder="Page">
+    </label>
+    <gh-issues owner="{{owner}}" repo="{{repo}}" state="{{state}}" page="{{page}}"></gh-issues>
+  </template>
+</body>
+</html>

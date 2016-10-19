@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Polymer Firebase Demo</title>
+  <script src="https://polygit.org/components/webcomponentsjs/webcomponents-lite.min.js"></script>
+  <link rel="import" href="components/polymer/polymer.html">
+  <link rel="import" href="components/polymerfire/firebase-app.html">
+  <link rel="import" href="components/polymerfire/firebase-auth.html">
+  <link rel="import" href="components/polymerfire/firebase-query.html">
+  <link rel="import" href="components/polymerfire/firebase-document.html">
+  <style>
+    body {
+      margin: 1em auto;
+      max-width: 50em;
+    }
+  </style>
+</head>
+<body>
+  <template id="app" is="dom-bind">
+    
+    <firebase-app auth-domain="ux-design-matters.firebaseapp.com"
+      database-url="https://ux-design-matters.firebaseio.com"
+      api-key="AIzaSyBpLwx8gT12P9G17RHcOeTMM43RCvQ_mcU">
+    </firebase-app>
+    
+    <firebase-auth id="auth" user="{{user}}" provider="google" on-error="showError"></firebase-auth>
+    
+    <div class="error" hidden$="[[!error]]">[[error.code]]: [[error.message]]</div>
+    
+    <div hidden$="[[user]]">
+      <button on-tap="signInWithGoogle">Sign In With Google</button>
+    </div>
+    
+    <div hidden$="[[!user]]">
+      <table>
+        <tr><th>uid</th> <td>[[user.uid]]</td></tr>
+        <tr><th>displayName</th> <td>[[user.displayName]]</td></tr>
+        <tr><th>email</th> <td>[[user.email]]</td></tr>
+        <tr><th>emailVerified</th> <td>[[user.emailVerified]]</td></tr>
+      </table>
+      <br>
+      <button on-tap="signOut">Sign Out</button>
+      <br><br>
+      <label>
+        Phone: 
+        <input type="text" value="{{userData.phone::change}}" placeholder="Phone">
+      </label>
+      <br><br>
+      <label>
+        Bio:
+        <textarea rows="4" value="{{userData.bio::input}}"></textarea>
+      </label>
+    </div>
+    
+    <firebase-document
+      path="/users/{{user.uid}}"
+      data="{{userData}}">
+    </firebase-document>
+    
+  </template>
+  
+  <script type="text/javascript">
+      document.addEventListener('WebComponentsReady', function() {
+        var app = document.getElementById('app');
+        app.error = null;
+        app.showError = function(e) {
+          this.error = e.detail;
+        };
+        app.signInAnonymously = function() {
+          this.error = null;
+          this.$.auth.signInAnonymously();
+        };
+        app.signInWithGoogle = function() {
+          this.error = null;
+          this.$.auth.signInWithPopup();
+        };
+        app.signInWithEmailAndPassword = function(e) {
+          if (e) { e.preventDefault(); }
+          this.error = null;
+          this.$.auth.signInWithEmailAndPassword(this.email, this.password);
+          this.email = null;
+          this.password = null;
+        };
+        app.createUserWithEmailAndPassword = function() {
+          this.error = null;
+          this.$.auth.createUserWithEmailAndPassword(this.email, this.password);
+          this.email = null;
+          this.password = null;
+        };
+        app.signOut = function() {
+          this.error = null;
+          this.$.auth.signOut();
+        };
+      });
+    </script>
+</body>
+</html>
